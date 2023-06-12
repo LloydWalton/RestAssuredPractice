@@ -14,9 +14,9 @@ public class AddPlace {
 		RestAssured.baseURI="https://rahulshettyacademy.com";
 	}
 
-	
+	// Adding body directly from code
 	@Test
-	public void addPlace()
+	public void addPlace_Direct()
 	{
 		given().log().all().queryParam("key", "qaclick12311").header("Content-Type","application/json")
 		.body("{\r\n"
@@ -37,6 +37,16 @@ public class AddPlace {
 				+ "}").
 		when().post("maps/api/place/add/json").then().assertThat().statusCode(200).log().all();
 }
+	
+	// Adding body from another class
+		@Test
+		public void addPlace_FromDiffClass()
+		{
+			TestData data=new TestData();
+			
+			given().log().all().queryParam("key", "qaclick12311").header("Content-Type","application/json").body(data.addPlaceData()).
+			when().post("maps/api/place/add/json").then().assertThat().statusCode(200).log().all();
+		}
 
 
 	}
