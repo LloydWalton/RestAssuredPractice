@@ -14,7 +14,7 @@ public class AddPlace {
 		RestAssured.baseURI="https://rahulshettyacademy.com";
 	}
 
-	
+	//Today test 111
 	@Test
 	public void addPlace()
 	{
