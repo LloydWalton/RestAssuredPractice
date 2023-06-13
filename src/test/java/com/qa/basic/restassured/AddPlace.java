@@ -1,8 +1,10 @@
 package com.qa.basic.restassured;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import io.restassured.RestAssured;
+import io.restassured.filter.session.SessionFilter;
 import io.restassured.path.json.JsonPath;
 
 import static io.restassured.RestAssured.*;
@@ -21,7 +23,9 @@ public class AddPlace {
 	}
 
 	
+	
 	// Adding body directly from code
+	//given() ->import static io.restassured.RestAssured.*;
 	@Test(priority = 1)
 	public void addPlace_Direct() {
 		given().log().all().queryParam("key", "qaclick12311").header("Content-Type", "application/json")
@@ -103,7 +107,74 @@ public class AddPlace {
 		
 }
 
+	@Test(priority = 6,dataProvider = "bookData")
+	public void delBook(String book,String id)
+	{
+		//RestAssured.baseURI="https://rahulshettyacademy.com";
+		//given().log().all().header("Content-Type","application/json").body(TestData.addBookData(book, id)).when().post("Library/Addbook.php")
+		given().log().all().header("Content-Type","application/json").body("{\r\n"
+				+ "\"name\":\"Learn Aaappium Automation with Java\",\r\n"
+				+ "\"isbn\":\"bcssd\",\r\n"
+				+ "\"aisle\":\"29ss26\",\r\n"
+				+ "\"author\":\"John faoer\"\r\n"
+				+ "}").when().post("Library/Addbook.php")
+		.then().assertThat().statusCode(200).body("Msg", equalTo("successfully added"));
+		System.out.println("************************");
+		System.out.println(book);
+		System.out.println(id);
+	}
 	
+	
+	@DataProvider
+	public Object[][] bookData()
+	{
+		return new Object[][] {{"Viadsan","raddsa"},{"dsadsa","dsada"}};
+	}
+
+	@Test(priority = 7)
+	public void pathParameter()
+	
+	{
+		given().log().all().pathParam("country", "Finland") .when() .get("https://restcountries.com/v2/name/{country}") .then().log().all().statusCode(200).body("capital", contains("Helsinki"));
+		
+	}
+
+	/*
+	@Test(priority = 8)
+	public void sessionFilter()
+	{
+		RestAssured.baseURI="http://localhost:8080";
+		//Login Scenario
+		SessionFilter session=new SessionFilter();
+		String response=given().relaxedHTTPSValidation().header("Content-Type","application/json").body("{\r\n" +
+		"    \"username\": \"RahulShetty\",\r\n" +
+		"    \"password\": \"XXXX11\"\r\n" +
+		"}").log().all().filter(session).when().post("/rest/auth/1/session").then().log().all().extract().response().asString();
+
+
+		//Pass the same under 
+		given().filter(session).when().post().then().statusCode(200);
+	}
+	
+	
+	@Test (priority = 9)
+	public void addAttchment()
+	{
+		given().pathParam("idparam",id).log().all().header("Content-Type","multipart/form-data").filter(session).header("X-Atlassian-Token","nocheck").
+		multiPart("file",new File("C:\\Users\\clloy\\eclipse-workspace\\RestAssured-Udemy\\Attachment")).when().post("/rest/api/2/issue/{idparam}/attachments").
+		then().assertThat().statusCode(200);
+	}
+
+@Test (priority = 10)
+	public void relaxedHTTPSValidation()
+	{
+	String response=given().relaxedHTTPSValidation().header("Content-Type","application/json").body("{\r\n" +
+"    \"username\": \"RahulShetty\",\r\n" +
+"    \"password\": \"XXXX11\"\r\n" +
+"}").log().all().filter(session).when().post("/rest/auth/1/session").then().log().all().extract().response().asString();
+
+}
+*/	
 }
 
 
