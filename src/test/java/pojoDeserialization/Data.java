@@ -1,4 +1,4 @@
-package pojo;
+package pojoDeserialization;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
