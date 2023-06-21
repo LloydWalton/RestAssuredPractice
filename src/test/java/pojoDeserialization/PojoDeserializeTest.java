@@ -1,4 +1,4 @@
-package pojo;
+package pojoDeserialization;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.*;
 
@@ -34,13 +34,6 @@ public class PojoDeserializeTest {
 			System.out.println(userDetails.getSupport().getText());
 			
 			System.out.println("***************");
-			
-			//System.out.println(gc.getInstructor());
-			
-		//	System.out.println(gc.getExpertise());
-			
-			//System.out.println(gc.getCourses().getApi().get(1).getCourseTitle());	
-			
 		}
 
 
