@@ -27,7 +27,6 @@ public class RegisterReq {
 		{
 			
 			Response res=given().log().all().body(body).header("Content-Type","application/json").when().post("/api/register").then().log().all().assertThat().statusCode(200).extract().response();
-			
 			System.out.println(res);
 		}
 }
